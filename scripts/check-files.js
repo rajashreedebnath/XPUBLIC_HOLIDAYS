@@ -41,7 +41,7 @@ const testFolderToIgnore = path.join(__dirname, "../src/__test__");
     logSuccess("TypeScript compiled successfully without errors");
     passedTests++;
   } catch (error) {
-    logError("TypeScript compilation failed. Please fix the errors.");
+    logError("TypeScript compilation failed, please fix the errors");
     console.error(error.stdout.toString());
     failedTests++;
     process.exit(1); // Exit the script with a non-zero status code
@@ -54,11 +54,13 @@ const testFolderToIgnore = path.join(__dirname, "../src/__test__");
 
   fs.readdirSync(componentsPath).forEach((file) => {
     const ext = path.extname(file);
+    const fileNameWithoutExtension = file.replace(/\.tsx?$|\.ts$/, '');
+
     if (ext && ext !== ".tsx" && ext !== ".css") {
-      logError(`File ${file} has an unsupported extension: ${ext}`);
+      logError(`File ${fileNameWithoutExtension} has an unsupported extension`);
       failedTests++;
     } else if (ext === ".tsx") {
-      logSuccess(`File ${file} is correctly using the .tsx extension`);
+      logSuccess(`File ${fileNameWithoutExtension} is correctly using the tsx extension`);
       passedTests++;
     }
   });
@@ -66,10 +68,10 @@ const testFolderToIgnore = path.join(__dirname, "../src/__test__");
   // Check for App.tsx file
   logInfo(`Wait... Test case "Check for App.tsx file" is running...`);
   if (!fs.existsSync(appFilePath) || path.extname(appFilePath) !== ".tsx") {
-    logError("App.tsx file is missing or incorrect extension");
+    logError("App file is missing or has an incorrect extension");
     failedTests++;
   } else {
-    logSuccess("App.tsx file is present and correctly uses the .tsx extension");
+    logSuccess("App file is present and correctly uses the tsx extension");
     passedTests++;
   }
 
@@ -79,10 +81,10 @@ const testFolderToIgnore = path.join(__dirname, "../src/__test__");
   );
   const typesFileContent = fs.readFileSync(typesFilePath, "utf8");
   if (!typesFileContent.includes("export interface Holiday")) {
-    logError("Type definitions are missing in Holiday.ts");
+    logError("Type definitions are missing in the Holiday TS file");
     failedTests++;
   } else {
-    logSuccess("Type definitions are present in Holiday.ts");
+    logSuccess("Type definitions are present in the Holiday TS file");
     passedTests++;
   }
 
@@ -93,14 +95,14 @@ const testFolderToIgnore = path.join(__dirname, "../src/__test__");
   if (fs.existsSync(tsconfigPath)) {
     const tsconfig = require(tsconfigPath);
     if (!tsconfig.compilerOptions.noImplicitAny) {
-      logError("noImplicitAny is not enabled in tsconfig.json");
+      logError("noImplicitAny is not enabled in tsconfig JSON file");
       failedTests++;
     } else {
-      logSuccess("noImplicitAny is enabled in tsconfig.json");
+      logSuccess("noImplicitAny is enabled in tsconfig JSON file");
       passedTests++;
     }
   } else {
-    logError("tsconfig.json file is missing");
+    logError("tsconfig JSON file is missing");
     failedTests++;
   }
 
@@ -122,7 +124,7 @@ const testFolderToIgnore = path.join(__dirname, "../src/__test__");
       ) {
         const content = fs.readFileSync(filePath, "utf8");
         if (content.includes(": any")) {
-          logError(`File ${filePath} contains 'any' type. Avoid using 'any'.`);
+          logError(`File ${filePath} contains 'any' type, avoid using 'any'`);
           failedTests++;
           anyPresent = true;
         }
@@ -134,7 +136,7 @@ const testFolderToIgnore = path.join(__dirname, "../src/__test__");
 
   //success message
   if (!anyPresent) {
-    logSuccess("No file contains 'any' type.");
+    logSuccess("No file contains 'any' type");
     passedTests++;
   }
 
@@ -147,7 +149,7 @@ const testFolderToIgnore = path.join(__dirname, "../src/__test__");
     logSuccess("ESLint passed with no issues");
     passedTests++;
   } catch (error) {
-    logError("ESLint found issues with type annotations. Please review them.");
+    logError("ESLint found issues with type annotations, please review them");
     console.error(error.stdout.toString());
     failedTests++;
   }

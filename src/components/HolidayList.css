@@ -1,0 +1,20 @@
+.holiday-card { 
+    border-radius: 8px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    background-color: rgb(241, 209, 209);
+    width: 40vw;
+    margin: auto;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.holiday-card h3 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.holiday-card p {
+    color: rgb(88, 88, 95);
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
